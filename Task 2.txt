@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 2 - Intermediate Web Development</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f4f8;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            display: grid;
+            grid-template-areas:
+                "nav nav"
+                "main aside"
+                "footer footer";
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+            padding: 20px;
+        }
+
+        nav {
+            grid-area: nav;
+            background-color: #0056b3;
+            padding: 15px;
+            color: white;
+        }
+
+        main {
+            grid-area: main;
+        }
+
+        aside {
+            grid-area: aside;
+        }
+
+        footer {
+            grid-area: footer;
+            background-color: #212529;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Contact Form */
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        /* To-Do List */
+        #todo-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        #todo-container input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #todo-container button {
+            width: 18%;
+            padding: 10px;
+            background-color: #28a745;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #eee;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+
+        li span {
+            float: right;
+            color: red;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-areas:
+                    "nav"
+                    "main"
+                    "aside"
+                    "footer";
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Intermediate HTML, CSS, and JavaScript</h1>
+    </header>
+
+    <div class="container">
+        <nav>
+            <h3>Navigation Bar</h3>
+            <p>This is the nav section using Flexbox.</p>
+        </nav>
+
+        <main>
+            <h2>Contact Form</h2>
+            <form id="contactForm">
+                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="email" id="email" placeholder="Your Email" required>
+                <textarea id="message" placeholder="Your Message" rows="4" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+
+            <h2>To-Do List</h2>
+            <div id="todo-container">
+                <input type="text" id="taskInput" placeholder="Enter task">
+                <button onclick="addTask()">+</button>
+                <ul id="taskList"></ul>
+            </div>
+        </main>
+
+        <aside>
+            <h3>Sidebar</h3>
+            <p>This section is styled using CSS Grid.</p>
+        </aside>
+
+        
+    </div>
+
+    <script>
+        // Form Validation
+        document.getElementById("contactForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const message = document.getElementById("message").value.trim();
+
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+            if (!name || !email || !message) {
+                alert("Please fill all the fields.");
+            } else if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+            } else {
+                alert("Form submitted successfully!");
+                this.reset();
+            }
+        });
+
+        // To-Do List Logic
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const taskText = taskInput.value.trim();
+            if (taskText === "") return;
+
+            const li = document.createElement("li");
+            li.textContent = taskText;
+
+            const span = document.createElement("span");
+            span.textContent = "✕";
+            span.onclick = function () {
+                li.remove();
+            };
+
+            li.appendChild(span);
+            document.getElementById("taskList").appendChild(li);
+            taskInput.value = "";
+        }
+    </script>
+
+</body>
+</html>
