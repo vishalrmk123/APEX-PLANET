@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 1: Introduction Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background-color: #005f73;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      background-color: #fff;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    section {
+      margin-bottom: 30px;
+    }
+
+    footer {
+      background-color: #005f73;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 40px;
+    }
+
+    a {
+      color: #0a9396;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        font-size: 16px;
+      }
+
+      header, footer {
+        padding: 15px;
+      }
+
+      main {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to Task 1</h1>
+    <p>Basic HTML + CSS Web Page</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>About This Page</h2>
+      <p>This is a basic HTML page created as part of Task 1. It demonstrates the use of semantic HTML elements and simple CSS styling.</p>
+    </section>
+
+    <section>
+      <h2>Features</h2>
+      <ul>
+        <li>Responsive layout using CSS</li>
+        <li>Semantic HTML tags</li>
+        <li>Clean, readable design</li>
+      </ul>
+    </section>
+
+    <section>
+      
+    </section>
+  </main>
+
+  <footer>
+    <p>The foot of the page.</p>
+  </footer>
+
+</body>
+</html>
