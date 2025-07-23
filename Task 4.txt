@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 4: Full Project</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f7f7f7;
+      color: #333;
+    }
+    header, footer {
+      background-color: #003049;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    section {
+      margin-bottom: 50px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    h2 {
+      color: #003049;
+    }
+    .todo input[type="text"] {
+      width: 70%;
+      padding: 10px;
+      font-size: 16px;
+    }
+    .todo button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin-left: 5px;
+    }
+    ul.todo-list {
+      list-style: none;
+      padding: 0;
+    }
+    ul.todo-list li {
+      padding: 10px;
+      margin-top: 5px;
+      background: #eee;
+      display: flex;
+      justify-content: space-between;
+    }
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+    .product {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+    .controls {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Task 4: Full Project Page</h1>
+    <p>Portfolio + To-Do App + Product Listing</p>
+  </header>
+
+  <main>
+    <!-- Section 1: Personal Portfolio -->
+    <section>
+      <h2>1. Personal Portfolio</h2>
+      <p>Hello! I am a web developer passionate about building clean and efficient user interfaces. Below are some highlights:</p>
+      <ul>
+        <li><strong>Name:</strong> VISHAL R</li>
+        <li><strong>Skills:</strong> HTML, CSS, JavaScript, React</li>
+        <li><strong>Projects:</strong> Portfolio Website, Task Manager, E-commerce Page</li>
+        <li><strong>Contact:</strong> student@example.com</li>
+      </ul>
+    </section>
+
+    <!-- Section 2: To-Do App -->
+    <section class="todo">
+      <h2>2. To-Do List App</h2>
+      <input type="text" id="taskInput" placeholder="Enter a new task" />
+      <button onclick="addTask()">Add Task</button>
+      <ul id="taskList" class="todo-list"></ul>
+    </section>
+
+    <!-- Section 3: Product Listing -->
+    <section>
+      <h2>3. Product Listing</h2>
+      <div class="controls">
+        <label for="sort">Sort by: </label>
+        <select id="sort" onchange="renderProducts()">
+          <option value="name">Name</option>
+          <option value="price">Price</option>
+        </select>
+        <label for="filter">Filter by Category: </label>
+        <select id="filter" onchange="renderProducts()">
+          <option value="all">All</option>
+          <option value="electronics">Electronics</option>
+          <option value="books">Books</option>
+        </select>
+      </div>
+      <div id="products"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Full Project | WebDev Task 4</p>
+  </footer>
+
+  <script>
+    // To-Do App Logic
+    const taskList = document.getElementById('taskList');
+    const taskInput = document.getElementById('taskInput');
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    function saveTasks() {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function renderTasks() {
+      taskList.innerHTML = '';
+      tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.className = task.completed ? 'completed' : '';
+        li.innerHTML = `
+          <span onclick="toggleComplete(${index})">${task.text}</span>
+          <button onclick="deleteTask(${index})">X</button>
+        `;
+        taskList.appendChild(li);
+      });
+    }
+
+    function addTask() {
+      const text = taskInput.value.trim();
+      if (text) {
+        tasks.push({ text, completed: false });
+        taskInput.value = '';
+        saveTasks();
+        renderTasks();
+      }
+    }
+
+    function toggleComplete(index) {
+      tasks[index].completed = !tasks[index].completed;
+      saveTasks();
+      renderTasks();
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1);
+      saveTasks();
+      renderTasks();
+    }
+
+    renderTasks();
+
+    // Product Listing Logic
+    const productsData = [
+      { name: 'Laptop', price: 800, category: 'electronics' },
+      { name: 'Smartphone', price: 500, category: 'electronics' },
+      { name: 'Book A', price: 20, category: 'books' },
+      { name: 'Book B', price: 15, category: 'books' },
+    ];
+
+    function renderProducts() {
+      const sort = document.getElementById('sort').value;
+      const filter = document.getElementById('filter').value;
+      let filtered = [...productsData];
+
+      if (filter !== 'all') {
+        filtered = filtered.filter(p => p.category === filter);
+      }
+
+      if (sort === 'name') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (sort === 'price') {
+        filtered.sort((a, b) => a.price - b.price);
+      }
+
+      const container = document.getElementById('products');
+      container.innerHTML = '';
+      filtered.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'product';
+        div.innerHTML = `<strong>${p.name}</strong><br>Price: $${p.price}<br>Category: ${p.category}`;
+        container.appendChild(div);
+      });
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
